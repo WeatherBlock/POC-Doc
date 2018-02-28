@@ -98,7 +98,29 @@ style fashion by calling methods on a library, this is similar to actions in Red
 
 A general step-by-step draft flow of a WeatherBlock raw data sale:
 
-TODO 
+##### Overview
+
+Firstly it should be made clear that there are 3 separate networks, each is independent but they work together to accomplish flexible Smart Contracts with payment facilitation. 
+The WeatherBlock may be organized into regional clusters and these will likely overlap with a runtime network cluster. We employ a distance algorithm (XOR-distance?) to group the clusters. 
+
+1. The runtime network - this consists of: 
+    - runtime nodes - a node process that executes signed code distributed to it by a GateKeeper node.
+    In our scheme our WeatherBlock super nodes will also run this process alongside other WeatherBlock related tasks.
+    - GateKeeper nodes - these group non-conflicting SC functions into buckets and then randomly distribute those to the runtime nodes. A runtime node has no control over what code it runs
+    and therefore even if malicious it would be difficult to affect the intended target.
+    - Auditor nodes - this ensures honesty of the runtime nodes by verifying the results between runtime nodes are in consensus with dBFT. Any nodes that give incorrect results are penalized.
+    - Merger nodes - this merges results from the runtime nodes, we use CRDT concepts to resolve conflicts
+  
+  
+2. The WeatherBlock network
+    - this consists of Sky2 and Nexus (Blueberry Pi) nodes which run IPFS with limited storage
+    - super nodes that run IPFS - these request the encrypted weather data from the Nexus nodes for pinned storage
+    
+
+3. The Payment network
+    - this is a 3rd party network that supports transactions with memos + attachments, this gives us the flexibility to store hashes from IPFS so our runtime and WeatherBlock network
+    nodes can verify the transactions are intended for a specific action
+  
 
 
 
@@ -127,4 +149,6 @@ TODO
 
 
 ## POC-ElmCompiler
+
+TODO: talk about streaming with multiple gatekeepers?
 
